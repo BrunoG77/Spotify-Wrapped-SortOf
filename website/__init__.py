@@ -57,8 +57,8 @@ def create_database(app):
 
 def create_spotify_oauth():
     return SpotifyOAuth(
-        client_id = "b9ef0b09c99a4be48a164ff694425c5b",
-        client_secret = "7b731b35af334c9ea6ac47518d78edad",
+        client_id = "", #Client ID would be here
+        client_secret = "", #Client secret would be here
         redirect_uri = url_for('home.redirectPage', _external=True),
         scope = "user-top-read"
     )
