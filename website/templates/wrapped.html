@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block title %}Wrapped{% endblock %}
+
+{% block content %}
+<br />
+<h1 align="center">Get your simplified spotify wrapped</h1>
+
+<form method="POST">
+    <br />
+    <div class="text-center">
+        <button type="hidden" class="btn btn-primary" title="1 month of data" 
+        name="wrapped_type" value="short_term">Short Term</button>
+
+        <button type="hidden" class="btn btn-primary" title="6 months of data" 
+        name="wrapped_type" value="medium_term">Medium Term</button>
+
+        <button type="hidden" class="btn btn-primary" title="Several years of data" 
+        name="wrapped_type" value="long_term">Long Term</button>
+    </div>
+</form>
+<br />
+<h2>{{ top5_art }}</h2>
+{% for artist in artists %}
+{{ artist }}
+<br />
+{% endfor %}
+<br />
+<br />
+<h2>{{ top5_tra }}</h2>
+{% for track in tracks %}
+{{ track }}
+<br />
+{% endfor %}
+
+{% endblock %}

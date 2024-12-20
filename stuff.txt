@@ -1,0 +1,39 @@
+<br />
+<h1 align="center">History of Wrapped</h1>
+<br />
+<ul class="list-group list-group-flush" id="wrapped">
+    {% for wrapped in user.wrappeds %}
+    <li class="list-group-item">
+        <h1>DATE</h1>
+        {{ wrapped.date }}
+        <br />
+        <br />
+        {{ wrapped.artists }}
+        <br />
+        <br />
+        {{ wrapped.tracks }}
+
+        <button type="button" class="close" onClick="deleteWrapped({{ wrapped.id }})">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+
+# get user saved tracks
+top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range="short_term")['items'][1]['name']
+
+# get user most listened tracks
+top_tracks = sp.current_user_top_tracks(limit=5, offset=0, time_range="short_term")['items'][0]['album']['artists'][0]['name']
+
+for track in top_tracks:
+    # get user top 5 tracks and respective artist
+    tracks[track['name']] = track['album']['artists'][0]['name']
+
+
+class Wrapped(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    artists = db.Column(db.String(500))
+    tracks = db.Column(db.String(500))
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

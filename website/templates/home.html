@@ -1,0 +1,81 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} 
+
+{% block content %}
+<br />
+<h1 align="center">History of Wrapped</h1>
+<br />
+<!-- Start table -->
+<table class="table table-hover">
+  <caption>List of User Spotify Wrapped</caption>
+  <thead class="thead-dark">
+    <th>Date</th>
+    <th>Wrapped Type</th>
+    <th>Artists</th>
+    <th>Tracks</th>
+    <th>Delete Wrapped</th>
+  </thead>
+  <tbody>
+    {% for wrapped in user.wrappeds %}
+    <tr>
+      <td>{{ wrapped.date }}</td>
+      
+      <!--indicate the time-term of the wrapped--> 
+      <td>
+        {% if wrapped.type == 'short_term'%}
+          Short Term
+        {% elif wrapped.type == 'medium_term' %}
+          Medium Term
+        {% elif wrapped.type == 'long_term' %}
+          Long Term
+        {% endif %}
+      </td>
+
+      <td>
+        {% if wrapped.type == 'short_term' %}
+        {% for artist in wrapped.artists_rel %}
+        <div>{{ artist.short_term }}</div>
+        {% endfor %}
+
+        {% elif wrapped.type == 'medium_term' %}
+        {% for artist in wrapped.artists_rel %}
+        <div>{{ artist.medium_term }}</div>
+        {% endfor %}
+
+        {% elif wrapped.type == 'long_term' %}
+        {% for artist in wrapped.artists_rel %}
+        <div>{{ artist.long_term }}</div>
+        {% endfor %}
+
+        {% endif%}
+      </td>
+    
+      <td>
+        {% if wrapped.type == 'short_term' %}
+        {% for track in wrapped.tracks_rel %}
+        <div>{{ track.short_term }}</div>
+        {% endfor %}
+
+        {% elif wrapped.type == 'medium_term' %}
+        {% for track in wrapped.tracks_rel %}
+        <div>{{ track.medium_term }}</div>
+        {% endfor %}
+
+        {% elif wrapped.type == 'long_term' %}
+        {% for track in wrapped.tracks_rel %}
+        <div>{{ track.long_term }}</div>
+        {% endfor %}
+
+        {% endif%}
+      </td>
+
+      <td>
+        <button type="button" class="close" onClick="deleteWrapped({{ wrapped.id }})">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </td>
+    <tr>
+    {% endfor %}
+  </tbody>
+</table> 
+
+{% endblock %}
